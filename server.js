@@ -23,5 +23,9 @@ app.use(session({
     secret: 'any string'
 }));
 
+app.get('/', function (req, res) {
+    res.send("Node server running");
+});
+
 require('./services/tmdb.service.server')(app);
 app.listen(process.env.PORT || 5000);
