@@ -9,6 +9,12 @@ module.exports = function (app) {
             .then(movies => movies.json())
             .then(body => res.send(body));
 
+    discoverMovies = (req, res) =>
+        fetch(constants.TMDB_BASE_URL +
+            '/discover/movie?sort_by='+req.query.sort_by+'.'+req.query.order+'&api_key=' +
+            process.env.TMDB_API_KEY)
+            .then(movies => movies.json())
+            .then(body => res.send(body));
 
     searchMovie = (req, res) =>
         fetch(constants.TMDB_BASE_URL +
@@ -28,4 +34,5 @@ module.exports = function (app) {
     app.get('/api/movie/popular', findPopularMovies);
     app.get('/api/movie/search/:movieName', searchMovie);
     app.get('/api/movie/detail/:movieId', findMovieDetails);
+    app.get('/api/movie/discover', discoverMovies);
 }
