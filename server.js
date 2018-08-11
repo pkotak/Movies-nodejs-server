@@ -28,4 +28,5 @@ app.get('/', function (req, res) {
 });
 
 require('./services/tmdb.service.server')(app);
+require('./services/nyt.service.server')(app);
 app.listen(process.env.PORT || 5000);
