@@ -17,6 +17,15 @@ module.exports = function (app) {
             .then(movie => movie.json())
             .then(body => res.send(body));
 
+    findMovieDetails = (req, res) =>
+        fetch(constants.TMDB_BASE_URL +
+            '/movie/' + req.params['movieId'] +
+            '?api_key=' + process.env.TMDB_API_KEY +
+            '&append_to_response=videos,credits,similar')
+            .then(movie => movie.json())
+            .then(body => res.send(body));
+
     app.get('/api/movie/popular', findPopularMovies);
-    app.get('/api/movie/:movieName', searchMovie);
+    app.get('/api/movie/search/:movieName', searchMovie);
+    app.get('/api/movie/detail/:movieId', findMovieDetails);
 }
