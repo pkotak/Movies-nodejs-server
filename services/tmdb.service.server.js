@@ -24,6 +24,16 @@ module.exports = function (app) {
             .then(movies => movies.json())
             .then(body => res.send(body));
 
+    discoverMovies = (req, res) => {
+        var sortBy = (req.query.sort_by === '' || req.query.sort_by == 'undefined') ? 'popularity' :req.query.sort_by;
+        var order = (req.query.order === '' || req.query.order == 'undefined') ? 'desc' : req.query.order;
+        fetch(constants.TMDB_BASE_URL +
+            '/discover/movie?sort_by=' + sortBy + '.' + order + '&api_key=' +
+            process.env.TMDB_API_KEY)
+            .then(movies => movies.json())
+            .then(body => res.send(body));
+    }
+    
     searchMovie = (req, res) =>
         fetch(constants.TMDB_BASE_URL +
             '/search/movie?query=' + req.params['movieName'] +
@@ -44,4 +54,5 @@ module.exports = function (app) {
     app.get('/api/movie/popular', findPopularMovies);
     app.get('/api/movie/search/:movieName', searchMovie);
     app.get('/api/movie/detail/:movieId', findMovieDetails);
+    app.get('/api/movie/discover', discoverMovies);
 }
