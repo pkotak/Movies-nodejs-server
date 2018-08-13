@@ -3,29 +3,42 @@ const userSchema = require('./user.schema.server');
 
 const userModel = mongoose.model('UserModel', userSchema);
 
-createUser = user =>
-    userModel.create(user);
+function findUserByCredentials(credentials) {
+    return userModel.findOne(credentials, {username: 1, type: 1});
+}
 
-findAllUsers = () =>
-    userModel.find();
+function findUserById(userId) {
+    return userModel.findOne({_id: userId});
+}
 
-findUserById = userId =>
-    userModel.findById(userId);
+function createUser(user) {
+    return userModel.create(user);
+}
 
-updateUser = (userId, updatedUser) =>
-    userModel.update({_id: userId}, {
-        $set: updatedUser
-    });
+function findAllUsers() {
+    return userModel.find();
+}
 
-deleteUser = userId =>
-    userModel.remove({_id: userId});
+function updateUser(id, user) {
+    return userModel.updateOne({_id: id},
+        user);
+}
+
+function findByUserName(username) {
+    return userModel.findOne({username: username});
+}
+function deleteUser(id){
+    return userModel.deleteOne({_id:id})
+}
 
 var api = {
-    createUser,
-    findAllUsers,
-    findUserById,
-    updateUser,
-    deleteUser
-}
+    createUser: createUser,
+    findAllUsers: findAllUsers,
+    findUserById: findUserById,
+    findUserByCredentials: findUserByCredentials,
+    updateUser: updateUser,
+    findByUserName: findByUserName,
+    deleteUser:deleteUser
+};
 
 module.exports = api;
