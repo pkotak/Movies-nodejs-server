@@ -4,7 +4,7 @@ module.exports = function (app) {
 
     findNowPlayingMovies = (req, res) =>
         fetch(constants.TMDB_BASE_URL +
-            '/movie/get-now-playing?api_key=' +
+            '/movie/now_playing?api_key=' +
             process.env.TMDB_API_KEY)
             .then(movies => movies.json())
             .then(body => res.send(body));

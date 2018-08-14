@@ -1,13 +1,15 @@
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-    firstName: String,
-    lastName: String,
     username: {type: String, required: true},
     password: String,
-    email: String,
-    phone: String,
-    role: {type: String, enum: ['user','critic', 'admin', 'actor'], default: 'user'},
+    firstName: {type: String, default: ''},
+    lastName: {type: String, default: ''},
+    email: {type: String, default: ''},
+    dob: {type: Date, default:new Date()},
+    phone: {type: Number, default: 0},
+    description: {type: String, default: ''},
+    type: String,
     followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}],
     following: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}],
     favorites: [],
