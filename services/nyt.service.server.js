@@ -4,18 +4,23 @@ module.exports = function (app) {
 
     findTopNews = (req, res) =>
         fetch('https://api.nytimes.com/svc/topstories/v2/movies.json?&api-key=' +
-            process.env.NYT_API_KEY)
+            process.env.NYT_TOP_STORIES_API_KEY)
             .then(news => news.json())
             .then(body => res.send(body));
 
+    findPopularNews = (req, res) =>
+        fetch('https://api.nytimes.com/svc/mostpopular/v2/mostviewed/Movies/7.json?&api-key=' +
+            process.env.NYT_TOP_STORIES_API_KEY)
+            .then(news => news.json())
+            .then(body => res.send(body));
 
-    // searchMovie = (req, res) =>
-    //     fetch(constants.TMDB_BASE_URL +
-    //         '/search/movie?query=' + req.params['movieName'] +
-    //         '&api_key=' + process.env.TMDB_API_KEY)
-    //         .then(movie => movie.json())
-    //         .then(body => res.send(body));
+    findReviews = (req, res) =>
+        fetch('https://api.nytimes.com/svc/movies/v2/reviews/picks.json?&api-key=' +
+            process.env.NYT_TOP_STORIES_API_KEY)
+            .then(reviews => reviews.json())
+            .then(body => res.send(body));
 
     app.get('/api/news/top', findTopNews);
-    // app.get('/api/movie/:movieName', searchMovie);
+    app.get('/api/news/popular', findPopularNews);
+    app.get('/api/news/reviews', findReviews);
 }
