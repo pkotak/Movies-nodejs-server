@@ -4,11 +4,11 @@ const userSchema = require('./user.schema.server');
 const userModel = mongoose.model('UserModel', userSchema);
 
 function findUserByCredentials(credentials) {
-    return userModel.findOne(credentials, {username: 1, type: 1});
+    return userModel.findOne(credentials);
 }
 
 function findUserById(userId) {
-    return userModel.findOne({_id: userId});
+    return userModel.findById(userId);
 }
 
 function createUser(user) {
