@@ -4,33 +4,35 @@ module.exports = app => {
     favoriteMovies = (req, res) => {
         let userId = req.session['userId'];
         let user = req.session['currentUser'];
-        if (req.body.favorite === 'true') {
+        let favorite;
+        let movieIndex = user.favorites.indexOf(req.params['movieId']);
+        if (movieIndex > -1) {
+            user.favorites.splice(movieIndex, 1);
+            favorite = false;
+        } else {
             user.favorites.push(req.params['movieId']);
-        }
-        else {
-            let movieIndex = user.favorites.indexOf(req.params['movieId']);
-            if (movieIndex > -1)
-                user.favorites.splice(movieIndex, 1);
+            favorite = true;
         }
 
         userModel.updateUser(userId, user)
-            .then(user => res.json(user));
+            .then(() => res.json({favorite: favorite}));
     }
 
     watchlistMovies = (req, res) => {
         let userId = req.session['userId'];
         let user = req.session['currentUser'];
-        if (req.body.save === 'true') {
+        let watchlist;
+        let movieIndex = user.watchList.indexOf(req.params['movieId']);
+        if (movieIndex > -1) {
+            user.watchList.splice(movieIndex, 1);
+            watchlist = false;
+        } else {
             user.watchList.push(req.params['movieId']);
-        }
-        else {
-            let movieIndex = user.watchList.indexOf(req.params['movieId']);
-            if (movieIndex > -1)
-                user.watchList.splice(movieIndex, 1);
+            watchlist = true;
         }
 
         userModel.updateUser(userId, user)
-            .then(user => res.json(user));
+            .then(() => res.json({watchlist: watchlist}));
     }
 
     app.post('/api/movie/:movieId/favorite', favoriteMovies);
