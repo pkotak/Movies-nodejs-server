@@ -47,6 +47,8 @@ function getSession(req, res) {
 
 var userService = require('./services/user.service.server');
 userService(app);
+var movieService = require('./services/movie.service.server');
+movieService(app);
 var tmdbService = require('./services/tmdb.service.server');
 tmdbService(app);
 var nytService = require('./services/nyt.service.server');
