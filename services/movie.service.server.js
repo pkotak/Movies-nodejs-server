@@ -23,16 +23,14 @@ module.exports = app => {
     watchlistMovies = (req, res) => {
         let userId = req.session['userId'];
         let user = req.session['currentUser'];
-        if (req.body.save === 'true') {
-
-            console.log("Save", req.params['movieId'], user);
+        let watchlist;
+        let movieIndex = user.watchList.indexOf(req.params['movieId']);
+        if (movieIndex > -1) {
+            user.watchList.splice(movieIndex, 1);
+            watchlist = false;
+        } else {
             user.watchList.push(req.params['movieId']);
-        }
-        else {
-            let movieIndex = user.watchList.indexOf(req.params['movieId']);
-            console.log("Else", req.params['movieId'], user, movieIndex);
-            if (movieIndex > -1)
-                user.watchList.splice(movieIndex, 1);
+            watchlist = true;
         }
 
         userModel.updateUser(userId, user)
