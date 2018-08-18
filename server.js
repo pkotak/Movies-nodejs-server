@@ -53,5 +53,7 @@ var tmdbService = require('./services/tmdb.service.server');
 tmdbService(app);
 var nytService = require('./services/nyt.service.server');
 nytService(app);
+var fanService = require('./services/fan.service.server');
+fanService(app);
 
 app.listen(process.env.PORT || 5000);
