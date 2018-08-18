@@ -31,6 +31,10 @@ function deleteUser(id){
     return userModel.deleteOne({_id:id})
 }
 
+function findAllFans() {
+    return userModel.find({type: 'Fan'})
+}
+
 var api = {
     createUser: createUser,
     findAllUsers: findAllUsers,
@@ -38,7 +42,8 @@ var api = {
     findUserByCredentials: findUserByCredentials,
     updateUser: updateUser,
     findByUserName: findByUserName,
-    deleteUser:deleteUser
+    deleteUser:deleteUser,
+    findAllFans:findAllFans
 };
 
 module.exports = api;
