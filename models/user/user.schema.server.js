@@ -8,12 +8,16 @@ var userSchema = mongoose.Schema({
     email: {type: String, default: ''},
     dob: {type: Date, default:new Date()},
     phone: {type: Number, default: 0},
+    city: {type: String, default: ''},
     description: {type: String, default: ''},
     type: String,
     followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}],
     following: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}],
     favorites: [],
-    watchList: []
+    watchList: [],
+    eventLocation: {type: String, default: ''},
+    eventDesc: {type: String, default: ''},
+    events:[{type: mongoose.Schema.Types.ObjectId, ref: 'EventModel'}],
 }, {collection: 'user'});
 
 module.exports = userSchema;
