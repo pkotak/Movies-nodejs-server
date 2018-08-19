@@ -52,6 +52,7 @@ let nytService = require('./services/nyt.service.server');
 let fanService = require('./services/fan.service.server');
 let eventService = require('./services/event.service.server');
 let adminService = require('./services/admin.service.server');
+let reviewService = require('./services/review.service.server');
 adminService(app);
 userService(app);
 tmdbService(app);
@@ -59,5 +60,6 @@ nytService(app);
 movieService(app);
 fanService(app);
 eventService(app);
+reviewService(app);
 
 app.listen(process.env.PORT || 5000);
