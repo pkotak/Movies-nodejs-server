@@ -27,7 +27,6 @@ module.exports = function (app) {
 
     function findAllEventOfUser(req, res) {
         let user = req.session.currentUser;
-        console.log(user);
         userModel.findAllEventsOfUser(user)
             .then(response => res.json(response));
     }

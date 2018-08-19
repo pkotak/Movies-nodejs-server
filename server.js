@@ -51,6 +51,8 @@ let tmdbService = require('./services/tmdb.service.server');
 let nytService = require('./services/nyt.service.server');
 let fanService = require('./services/fan.service.server');
 let eventService = require('./services/event.service.server');
+let adminService = require('./services/admin.service.server');
+adminService(app);
 userService(app);
 tmdbService(app);
 nytService(app);
