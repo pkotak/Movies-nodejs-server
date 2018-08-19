@@ -73,16 +73,31 @@ module.exports = app => {
             .then(() => res.sendStatus(200))
     }
 
+    function removeMovieFromWatchlist(req, res) {
+        let movie = req.body;
+        let user = req.session.currentUser;
+        userModel.deleteUserWatchlistMovie(user._id, movie._id)
+            .then(() => res.sendStatus(200))
+    }
+
     function getFavoriteMovies(req, res) {
         let user = req.session.currentUser;
         userModel.findAllFavoriteMoviesOfUser(user)
             .then(response => res.json(response));
     }
 
+    function getWatchlistMovies(req, res) {
+        let user = req.session.currentUser;
+        userModel.findAllWatchlistMoviesOfUser(user)
+            .then(response => res.json(response));
+    }
+
     app.post('/api/movie/:movieId/favorite', favoriteMovies);
     app.post('/api/movie/:movieId/watchlist', watchlistMovies);
     app.get('/api/movie/favorites', getFavoriteMovies);
+    app.get('/api/movie/watchlist', getWatchlistMovies);
     app.delete('/api/dislikeMovie', dislikeMovie);
+    app.delete('/api/movie/:movieId/watchlist', removeMovieFromWatchlist);
 
     function getRecommendedMovies() {
 

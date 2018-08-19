@@ -51,9 +51,18 @@ function findAllFavoriteMoviesOfUser(user) {
     return userModel.findOne({_id: user._id}, {favorites: 1}).populate('favorites')
 }
 
+function findAllWatchlistMoviesOfUser(user) {
+    return userModel.findOne({_id: user._id}, {watchList: 1}).populate('watchList')
+}
+
 function deleteUserFavoriteMovie(id, movieId) {
     return userModel.update({_id: id}, {$pull: {favorites: movieId}})
 }
+
+function deleteUserWatchlistMovie(id, movieId) {
+    return userModel.update({_id: id}, {$pull: {watchList: movieId}})
+}
+
 
 var api = {
     createUser: createUser,
@@ -68,7 +77,9 @@ var api = {
     deleteUserEvent:deleteUserEvent,
     findAllEventsOfUser:findAllEventsOfUser,
     findAllFavoriteMoviesOfUser: findAllFavoriteMoviesOfUser,
-    deleteUserFavoriteMovie: deleteUserFavoriteMovie
+    deleteUserFavoriteMovie: deleteUserFavoriteMovie,
+    findAllWatchlistMoviesOfUser: findAllWatchlistMoviesOfUser,
+    deleteUserWatchlistMovie: deleteUserWatchlistMovie
 };
 
 module.exports = api;
