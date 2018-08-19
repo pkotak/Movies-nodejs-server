@@ -47,6 +47,16 @@ function findAllEventsOfUser(user) {
     return userModel.findOne({_id: user._id}, {events: 1}).populate('events')
 }
 
+function findAllEventsByActorId(actorId) {
+    return userModel.findOne({_id: actorId}, {events: 1}).populate('events')
+}
+
+
+function findAllFavoriteMoviesByUserId(userId) {
+    return userModel.findOne({_id: userId}, {favorites: 1}).populate('favorites')
+}
+
+
 function findAllFavoriteMoviesOfUser(user) {
     return userModel.findOne({_id: user._id}, {favorites: 1}).populate('favorites')
 }
@@ -79,7 +89,9 @@ var api = {
     findAllFavoriteMoviesOfUser: findAllFavoriteMoviesOfUser,
     deleteUserFavoriteMovie: deleteUserFavoriteMovie,
     findAllWatchlistMoviesOfUser: findAllWatchlistMoviesOfUser,
-    deleteUserWatchlistMovie: deleteUserWatchlistMovie
+    deleteUserWatchlistMovie: deleteUserWatchlistMovie,
+    findAllEventsByActorId: findAllEventsByActorId,
+    findAllFavoriteMoviesByUserId: findAllFavoriteMoviesByUserId
 };
 
 module.exports = api;
