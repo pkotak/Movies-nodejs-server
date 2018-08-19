@@ -56,7 +56,6 @@ module.exports = function (app) {
             })
             .catch(() => {
                 res.sendStatus(501);
-                res.send(resultFans);
             });
     }
 

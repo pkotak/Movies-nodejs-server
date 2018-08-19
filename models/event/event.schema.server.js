@@ -1,11 +1,10 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var eventSchema = mongoose.Schema({
-    name: {type: String, required: true},
-    movieId: {type: String, required: true},
-    venue: String,
-    date: {type: Date, default: Date.now()},
-    ticketPrice: String
-});
+let eventSchema = mongoose.Schema({
+    name: String,
+    date: Date,
+    location:String,
+    desc:String
+}, {collection: 'event'});
 
 module.exports = eventSchema;

@@ -103,7 +103,6 @@ module.exports = app => {
             })
             .catch(() => {
                 res.sendStatus(501);
-                res.send(resultMovies);
             });
     }
 

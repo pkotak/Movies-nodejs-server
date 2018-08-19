@@ -1,15 +1,15 @@
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require('body-parser');
+let express = require('express');
+let session = require('express-session');
+let bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://' + process.env.DBUSERNAME + ':' + process.env.DBPASSWORD + '@ds121312.mlab.com:21312/movies-react');
 
-var app = express();
+let app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -33,27 +33,29 @@ app.get('/api/session/get/:name',
     getSession);
 
 function setSession(req, res) {
-    var name = req.params['name'];
-    var value = req.params['value'];
+    let name = req.params['name'];
+    let value = req.params['value'];
     req.session[name] = value;
     res.send(req.session);
 }
 
 function getSession(req, res) {
-    var name = req.params['name'];
-    var value = req.session[name];
+    let name = req.params['name'];
+    let value = req.session[name];
     res.send(value);
 }
 
-var userService = require('./services/user.service.server');
+let userService = require('./services/user.service.server');
+let movieService = require('./services/movie.service.server');
+let tmdbService = require('./services/tmdb.service.server');
+let nytService = require('./services/nyt.service.server');
+let fanService = require('./services/fan.service.server');
+let eventService = require('./services/event.service.server');
 userService(app);
-var movieService = require('./services/movie.service.server');
-movieService(app);
-var tmdbService = require('./services/tmdb.service.server');
 tmdbService(app);
-var nytService = require('./services/nyt.service.server');
 nytService(app);
-var fanService = require('./services/fan.service.server');
+movieService(app);
 fanService(app);
+eventService(app);
 
 app.listen(process.env.PORT || 5000);

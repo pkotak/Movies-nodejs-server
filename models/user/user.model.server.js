@@ -35,6 +35,18 @@ function findAllFans() {
     return userModel.find({type: 'Fan'})
 }
 
+function updateUserEvent(id, event) {
+    return userModel.update({_id: id}, {$push: {events: event._id}})
+}
+
+function deleteUserEvent(id, event) {
+    return userModel.update({_id: id}, {$pull: {events: event._id}})
+}
+
+function findAllEventsOfUser(user) {
+    return userModel.findOne({_id: user._id}, {events: 1}).populate('events')
+}
+
 var api = {
     createUser: createUser,
     findAllUsers: findAllUsers,
@@ -43,7 +55,10 @@ var api = {
     updateUser: updateUser,
     findByUserName: findByUserName,
     deleteUser:deleteUser,
-    findAllFans:findAllFans
+    findAllFans:findAllFans,
+    updateUserEvent:updateUserEvent,
+    deleteUserEvent:deleteUserEvent,
+    findAllEventsOfUser:findAllEventsOfUser
 };
 
 module.exports = api;

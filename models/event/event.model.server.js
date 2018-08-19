@@ -1,31 +1,32 @@
-const mongoose = require('mongoose');
-const eventSchema = require('./event.schema.server');
+let mongoose = require('mongoose');
+let eventSchema = require('./event.schema.server');
+let eventModel = mongoose.model('EventModel', eventSchema);
 
-const eventModel = mongoose.model('EventModel', eventSchema);
-
-createEvent = event =>
-    eventModel.create(event);
-
-findAllEvents = () =>
-    eventModel.find();
-
-findEventById = eventId =>
-    eventModel.findById(eventId);
-
-updateEvent = (eventId, updatedEvent) =>
-    eventModel.update({_id: eventId}, {
-        $set: updatedEvent
-    });
-
-deleteEvent = eventId =>
-    eventModel.remove({_id: eventId});
-
-var api = {
-    createEvent,
-    findAllEvents,
-    findEventById,
-    updateEvent,
-    deleteEvent
+function createEvent(event) {
+    return eventModel.create({
+        name: event.eventName,
+        date: event.eventDate,
+        location: event.venueName,
+        desc: event.eventDesc})
 }
+
+function deleteEvent(eventId) {
+    return eventModel.remove(eventId);
+}
+
+function findEventByCity(city){
+    return eventModel.find({location:city})
+}
+
+function updateEvent(event){
+    return eventModel.updateOne({_id:event._id},event)
+}
+
+let api = {
+    createEvent: createEvent,
+    deleteEvent: deleteEvent,
+    findEventByCity:findEventByCity,
+    updateEvent:updateEvent
+};
 
 module.exports = api;
