@@ -1,7 +1,7 @@
 module.exports = function (app) {
 
     let fanFollowedModel = require('../models/fanFollowed/fanFollowed.model.server');
-    let likeMovieModel = require('../models/likeMovie/likeMovie.model.server')
+    let likeMovieModel = require('../models/likeMovie/likeMovie.model.server');
     let userModel = require('../models/user/user.model.server');
 
 
@@ -34,7 +34,12 @@ module.exports = function (app) {
     }
 
     function getFanContent(req, res) {
-        likeMovieModel.findLikedMovieForUser(req.params['fanId'])
+        //likeMovieModel.findLikedMovieForUser(req.params['fanId']).then(result => res.json(result));
+        userModel.findAllFavoriteMoviesByUserId(req.params['fanId']).then(result => res.json(result));
+    }
+
+    function getActorContent(req, res) {
+        userModel.findAllEventsByActorId(req.params['actorId'])
             .then(result => res.json(result));
     }
 
@@ -63,6 +68,7 @@ module.exports = function (app) {
     app.get('/api/fan', findAllFans);
     app.post('/api/fan/:fanId', followFan);
     app.get('/api/fan/likes/:fanId', getFanContent);
+    app.get('/api/actor/events/:actorId', getActorContent);
     app.get('/api/fan/following', getFollowedFansForUser);
     app.delete('/api/fan/unfollow', unfollowFan);
 };

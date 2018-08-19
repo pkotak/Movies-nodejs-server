@@ -99,15 +99,8 @@ module.exports = app => {
     app.delete('/api/dislikeMovie', dislikeMovie);
     app.delete('/api/movie/:movieId/watchlist', removeMovieFromWatchlist);
 
-    function getRecommendedMovies() {
-
-    }
-
+    function getRecommendedMovies() {}
     app.get('/api/recommendedMovies', getRecommendedMovies);
-
-    function removeRecommendedMovie() {
-
-    }
-
+    function removeRecommendedMovie() {}
     app.delete('/api/unrecommendMovie', removeRecommendedMovie);
 }
