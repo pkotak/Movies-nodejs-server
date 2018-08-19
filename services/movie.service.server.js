@@ -73,6 +73,12 @@ module.exports = app => {
             .then(() => res.sendStatus(200))
     }
 
+    function deleteMovieForUser(req, res) {
+        let userId = req.params['userId'];
+        let movieId = req.params['movieId'];
+        userModel.deleteUserFavoriteMovie(userId, movieId)
+            .then(() => res.sendStatus(200));
+    }
     function removeMovieFromWatchlist(req, res) {
         let movie = req.body;
         let user = req.session.currentUser;
@@ -97,17 +103,11 @@ module.exports = app => {
     app.get('/api/movie/favorites', getFavoriteMovies);
     app.get('/api/movie/watchlist', getWatchlistMovies);
     app.delete('/api/dislikeMovie', dislikeMovie);
+    app.delete('/api/user/:userId/movie/:movieId/dislike', deleteMovieForUser);
     app.delete('/api/movie/:movieId/watchlist', removeMovieFromWatchlist);
 
-    function getRecommendedMovies() {
-
-    }
-
+    function getRecommendedMovies() {}
     app.get('/api/recommendedMovies', getRecommendedMovies);
-
-    function removeRecommendedMovie() {
-
-    }
-
+    function removeRecommendedMovie() {}
     app.delete('/api/unrecommendMovie', removeRecommendedMovie);
 }

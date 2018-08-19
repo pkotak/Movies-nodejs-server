@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
     app.get('/api/admin/user', getAllUsers);
+    app.get('/api/admin/user/favmovies', getAllUserFavMovies);
     app.post('/api/admin/user', updateUser);
     app.delete('/api/admin/user/:userId', deleteUser);
     app.get('/api/admin/all-favorite-movies', findAllFavoriteMovies);
@@ -35,6 +36,20 @@ module.exports = function (app) {
         }
         else {
             userModel.findAllUsers()
+                .then(users => res.json(users))
+        }
+    }
+
+    function getAllUserFavMovies(req, res) {
+        let user = req.session.currentUser;
+        if (user === undefined) {
+            res.sendStatus(500);
+        }
+        else if (user.type !== 'Admin') {
+            res.sendStatus(501);//not admin trying to get admin info
+        }
+        else {
+            userModel.findAllUsersFavoriteMovies()
                 .then(users => res.json(users))
         }
     }
