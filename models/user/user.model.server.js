@@ -47,6 +47,14 @@ function findAllEventsOfUser(user) {
     return userModel.findOne({_id: user._id}, {events: 1}).populate('events')
 }
 
+function findAllFavoriteMoviesOfUser(user) {
+    return userModel.findOne({_id: user._id}, {favorites: 1}).populate('favorites')
+}
+
+function deleteUserFavoriteMovie(id, movieId) {
+    return userModel.update({_id: id}, {$pull: {favorites: movieId}})
+}
+
 var api = {
     createUser: createUser,
     findAllUsers: findAllUsers,
@@ -58,7 +66,9 @@ var api = {
     findAllFans:findAllFans,
     updateUserEvent:updateUserEvent,
     deleteUserEvent:deleteUserEvent,
-    findAllEventsOfUser:findAllEventsOfUser
+    findAllEventsOfUser:findAllEventsOfUser,
+    findAllFavoriteMoviesOfUser: findAllFavoriteMoviesOfUser,
+    deleteUserFavoriteMovie: deleteUserFavoriteMovie
 };
 
 module.exports = api;

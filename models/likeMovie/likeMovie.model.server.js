@@ -29,8 +29,6 @@ function del(id){
 }
 
 var api = {
-
-    createLike: createLike,
     findByHash:findByHash,
     findLikedMovieForUser: findLikedMovieForUser,
     dislikeMovie: dislikeMovie,
