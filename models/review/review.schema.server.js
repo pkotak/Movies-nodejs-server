@@ -6,6 +6,7 @@ var reviewSchema = mongoose.Schema({
     movieName: String,
     movieId: {type: String, required: true},
     reviewerId: {type: mongoose.Schema.ObjectId, ref: 'UserModel', required: true},
+    reviewer: {type: mongoose.Schema.Types.Object, ref: 'UserModel'},
     createdDate: {type: Date, default: Date.now()}
 });
 

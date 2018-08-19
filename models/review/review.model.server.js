@@ -22,13 +22,17 @@ deleteReview = reviewId =>
 findAllReviewsForMovie = movieId =>
     reviewModel.find({movieId: movieId});
 
+findAllReviewsForUser = userId =>
+    reviewModel.find({reviewerId: userId});
+
 var api = {
     createReview,
     findAllReviews,
     findReviewById,
     updateReview,
     deleteReview,
-    findAllReviewsForMovie
+    findAllReviewsForMovie,
+    findAllReviewsForUser
 }
 
 module.exports = api;
