@@ -19,6 +19,10 @@ function findAllUsers() {
     return userModel.find();
 }
 
+function findAllUsersFavoriteMovies() {
+    return userModel.find({type: 'Fan'}).populate('favorites').exec();
+}
+
 function updateUser(id, user) {
     return userModel.updateOne({_id: id},
         user);
@@ -83,6 +87,7 @@ var api = {
     findByUserName: findByUserName,
     deleteUser:deleteUser,
     findAllFans:findAllFans,
+    findAllUsersFavoriteMovies: findAllUsersFavoriteMovies,
     updateUserEvent:updateUserEvent,
     deleteUserEvent:deleteUserEvent,
     findAllEventsOfUser:findAllEventsOfUser,
