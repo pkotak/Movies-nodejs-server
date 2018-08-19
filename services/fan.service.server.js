@@ -6,7 +6,8 @@ module.exports = function (app) {
 
 
     function findAllFans(req, res) {
-        userModel.findAllFans()
+        //userModel.findAllFans()
+        userModel.findAllUsers()
             .then(result => res.json(result));
     }
 
