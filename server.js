@@ -55,5 +55,7 @@ var nytService = require('./services/nyt.service.server');
 nytService(app);
 var fanService = require('./services/fan.service.server');
 fanService(app);
+var reviewService = require('./services/review.service.server');
+reviewService(app)
 
 app.listen(process.env.PORT || 5000);
