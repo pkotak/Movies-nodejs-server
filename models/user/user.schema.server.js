@@ -17,7 +17,7 @@ var userSchema = mongoose.Schema({
     watchList: [{type: mongoose.Schema.Types.ObjectId, ref: 'MovieModel'}],
     eventLocation: {type: String, default: ''},
     eventDesc: {type: String, default: ''},
-    events:[{type: mongoose.Schema.Types.ObjectId, ref: 'EventModel'}],
+    events:[{type: mongoose.Schema.Types.ObjectId, ref: 'EventModel'}]
 }, {collection: 'user'});
 
 module.exports = userSchema;

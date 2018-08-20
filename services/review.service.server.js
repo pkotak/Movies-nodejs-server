@@ -1,9 +1,8 @@
 module.exports = function (app) {
 
-    app.post('/api/review',createReview);
-    app.get('/api/review/:movieId',findAllReviewsForMovie);
-    app.get('/api/review/:userId/user',findAllReviewsForUser);
+
     let reviewModel = require('../models/review/review.model.server');
+    let userModel = require('../models/user/user.model.server');
 
     function createReview(req,res){
         var reviewInput = req.body;
@@ -29,8 +28,32 @@ module.exports = function (app) {
     }
 
     function findAllReviewsForUser(req, res) {
-        var userId = req.params['userId'];
+        // var userId = req.params['userId'];
+        var userId = req.session.currentUser._id;
         reviewModel.findAllReviewsForUser(userId)
             .then(reviews => res.json(reviews));
     }
+
+    function deleteReview(req, res) {
+        let reviewId = req.params['reviewId'];
+        let user = req.session.currentUser;
+
+        reviewModel.deleteReview(reviewId)
+            .then(() => res.sendStatus(200))
+    }
+
+    function updateReview(req,res){
+        let review = req.body;
+        let reviewTitle = review.reviewTitle;
+        let reviewText = review.reviewText;
+        let reviewId = review._id;
+        reviewModel.updateReview(reviewId, reviewTitle, reviewText)
+            .then(() => res.sendStatus(200));
+    }
+
+    app.post('/api/review',createReview);
+    app.get('/api/review/:movieId',findAllReviewsForMovie);
+    app.get('/api/review',findAllReviewsForUser);
+    app.delete('/api/review/:reviewId',deleteReview);
+    app.put('/api/review',updateReview);
 }

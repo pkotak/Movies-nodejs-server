@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const reviewSchema = require('./review.schema.server');
 const reviewModel = mongoose.model('ReviewModel', reviewSchema);
+// const userModel = mongoose.model('UserModel', userSchema);
 
 createReview = review =>
     reviewModel.create(review);
@@ -11,10 +12,8 @@ findAllReviews = () =>
 findReviewById = reviewId =>
     reviewModel.findById(reviewId);
 
-updateReview = (reviewId, updatedReview) =>
-    reviewModel.update({_id: reviewId}, {
-        $set: updatedReview
-    });
+updateReview = (reviewId, reviewTitle, reviewText) =>
+    reviewModel.update({_id:reviewId}, {$set: {title:reviewTitle, text:reviewText} })
 
 deleteReview = reviewId =>
     reviewModel.remove({_id: reviewId});
@@ -24,6 +23,10 @@ findAllReviewsForMovie = movieId =>
 
 findAllReviewsForUser = userId =>
     reviewModel.find({reviewerId: userId});
+
+
+// findAllReviewsForUser = userId =>
+//     userModel.findOne({_id: userId }, {reviews: 1}).populate('reviews');
 
 var api = {
     createReview,
